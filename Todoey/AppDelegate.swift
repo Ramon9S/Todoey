@@ -16,28 +16,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		print(NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).last! as String)
 		
 		print("didFinishLaunchingWithOptions")
+		print(#function)
 		
 		return true
 	}
 
 	func applicationWillResignActive(_ application: UIApplication) {
 		print("applicationWillResignActive")
+		print(#function)
 	}
 	
 	func applicationDidEnterBackground(_ application: UIApplication) {
 		print("applicationDidEnterBackground")
+		print(#function)
 	}
 	
 	func applicationWillEnterForeground(_ application: UIApplication) {
 		print("applicationWillEnterForeground")
+		print(#function)
 	}
 	
 	func applicationDidBecomeActive(_ application: UIApplication) {
 		print("applicationDidBecomeActive")
+		print(#function)
 	}
 	
 	func applicationWillTerminate(_ application: UIApplication) {
 		print("applicationWillTerminate")
+		print(#function)
 	}
 	
 	
