@@ -19,7 +19,7 @@ class ToDoListViewController: UITableViewController {
 	}
 	
 	// Context to interact with the DB's persistent container 
-	let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext /// Access AppDelegate singleton
+	let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext /// Access to the AppDelegate's persisteng storage singleton
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -128,15 +128,19 @@ class ToDoListViewController: UITableViewController {
 	
 	func loadItems(with request: NSFetchRequest<Item> = Item.fetchRequest(), predicate: NSPredicate? = nil) {
 
+		// 1 - Request --> THIS TIME WE ATE PASSING IT AS A PARAMETER + AN OPTIONAL PREDICATE
+
+		// 2 - Predicate for the query ==> PARENTCATEGORY.NAME == TODOLISTVC.SELECTEDCATEGORY
 		let categoryPredicate = NSPredicate(format: "parentCategory.name MATCHES %@", selectedCategory!.name!)
 		
+		// 3 - Adding an extra predicate with NSCOMPOUNDPREDICATE with the optional predicate parameter
 		if let additionalPredicate = predicate {
 			request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [categoryPredicate, additionalPredicate])
 		} else {
 			request.predicate = categoryPredicate
 		}
 		
-		
+		// 4 - Fetch the data using the context
 		do{
 			itemArray = try context.fetch(request)
 		} catch {
@@ -173,6 +177,7 @@ extension ToDoListViewController: UISearchBarDelegate {
 		// 3 - Sort Descriptor
 		request.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
 		
+		// 4 - Fetch the data with the loadItems func
 		loadItems(with: request, predicate: predicate)
 	}
 	
